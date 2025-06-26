@@ -34,56 +34,58 @@
       });
     });
 
-    // Contact form submission with Resend API
-    document.getElementById('contact-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const submitBtn = document.getElementById('submit-btn');
-      const successMessage = document.getElementById('success-message');
-      const errorMessage = document.getElementById('error-message');
-      
-      // Hide previous messages
-      successMessage.style.display = 'none';
-      errorMessage.style.display = 'none';
-      
-      // Show loading state
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<div class="loading-spinner"></div>Sending...';
-      
-      // Get form data
-      const formData = new FormData(this);
-      const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject'),
-        message: formData.get('message')
-      };
-      
-      try {
-        // Replace with your actual API endpoint
-        const response = await fetch('/api/send-email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-        
-        if (response.ok) {
-          successMessage.style.display = 'block';
-          this.reset();
-        } else {
-          throw new Error('Failed to send message');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        errorMessage.style.display = 'block';
-      } finally {
-        // Reset button state
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Send Message';
-      }
+  // Update the form submission script
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const submitBtn = document.getElementById('submit-btn');
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
+  
+  // Hide previous messages
+  successMessage.style.display = 'none';
+  errorMessage.style.display = 'none';
+  
+  // Show loading state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<div class="loading-spinner"></div>Sending...';
+  
+  // Get form data
+  const formData = new FormData(this);
+  const data = {
+    name: formData.get('name'),
+    email: formData.get('email'),
+    subject: formData.get('subject'),
+    message: formData.get('message')
+  };
+  
+  try {
+    // Use your Vercel function endpoint
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
     });
+    
+    const result = await response.json();
+    
+    if (response.ok) {
+      successMessage.style.display = 'block';
+      this.reset();
+    } else {
+      throw new Error(result.message || 'Failed to send message');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    errorMessage.style.display = 'block';
+  } finally {
+    // Reset button state
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Send Message';
+  }
+});
 
     // Add scroll effect to navbar
     window.addEventListener('scroll', function() {
