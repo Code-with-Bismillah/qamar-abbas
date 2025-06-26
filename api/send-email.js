@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
     // Send email using Resend's onboarding domain (no custom domain needed)
     const data = await resend.emails.send({
       from: 'onboarding@resend.dev', // Free onboarding domain
-      to: ['mubashirali1837@gmail.com'], // Your Gmail where you'll receive messages
+      to: ['codewithbismillah@gmail.com'], // Your Gmail where you'll receive messages
       subject: `Portfolio Contact: ${subject}`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa;">
