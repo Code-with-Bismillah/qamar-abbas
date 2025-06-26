@@ -22,7 +22,7 @@ async function handler(req, res) {
     // Send email using Resend
     const data = await resend.emails.send({
       from: 'contact@yourdomain.com', // Replace with your verified domain
-      to: ['qamar@yourdomain.com'], // Replace with your email
+      to: ['qamar'], // Replace with your email
       subject: `Portfolio Contact: ${subject}`,
       html: `
         <h2>New Contact Form Submission</h2>
